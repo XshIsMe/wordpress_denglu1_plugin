@@ -43,15 +43,8 @@ class userLogic
             $user = get_userdatabylogin($sUserName);
             $userId = $user->ID;
             // 更新用户
-            $userDate = array(
-                'ID' => $userId,
-                'user_pass' => $sNewPassword,
-            );
-            $updateResult = wp_update_user($userDate);
-            // 判断是否成功
-            if (!is_wp_error($updateResult)) {
-                return true;
-            }
+            wp_set_password($sNewPassword,  $userId);
+            return true;
         }
         return false;
     }

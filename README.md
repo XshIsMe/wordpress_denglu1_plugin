@@ -1,0 +1,2 @@
+# wordpress_denglu1_plugin
+使WordPress可以用登录易扫码登录

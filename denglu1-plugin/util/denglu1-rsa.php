@@ -78,7 +78,7 @@ class EncryptUtil
      */
     public static function rsa_aes_decrypt($sText, $sRasEncryptedKey)
     {
-        require_once dirname(__FILE__) . '/../config/denglu1-config.php';
-        return self::aesDecrypt(self::rsaPrivateKeyDecrypt($privateKey, $sRasEncryptedKey), $sText);
+        $options = get_option('denglu1_plugin_options');
+        return self::aesDecrypt(self::rsaPrivateKeyDecrypt($options['privateKey'], $sRasEncryptedKey), $sText);
     }
 }

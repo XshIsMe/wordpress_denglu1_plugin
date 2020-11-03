@@ -6,12 +6,14 @@
 function add_denglu1_button()
 {
     require_once dirname(__FILE__) . '/../config/denglu1-config.php';
+
+    $options = get_option('denglu1_plugin_options');
 ?>
     <script>
         function add_denglu1_button() {
             // 扫码URL
-            let denglu1_appId = "<?php echo $appId; ?>";
-            let denglu1_sUrl = "<?php echo $sUrl; ?>";
+            let denglu1_appId = "<?php echo esc_attr($options['appId']) ?>";
+            let denglu1_sUrl = "<?php echo esc_attr($options['sUrl']) ?>";
             let denglu1_url = "https://qrconnect.denglu.net.cn/connect.php?sAppId=" + denglu1_appId + "&sUrl=" + denglu1_sUrl + "&sType=login&sResType=web";
 
             // 创建元素

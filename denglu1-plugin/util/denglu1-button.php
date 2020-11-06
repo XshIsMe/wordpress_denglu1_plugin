@@ -18,14 +18,18 @@ function add_denglu1_button()
 
             // 创建元素
             let denglu1_nav = document.getElementById("nav");
-            let denglu1_p = document.createElement("p");
+            let denglu1_center = document.createElement("center");
             let denglu1_a = document.createElement("a");
 
-            // 添加元素
+            // 设置属性
             denglu1_a.setAttribute("href", denglu1_url);
+            denglu1_a.setAttribute("class", "button");
+            denglu1_a.setAttribute("style", "margin-top: 5%; text-decoration: none;");
+
+            // 添加元素
             denglu1_a.innerHTML = "使用登录易登录";
-            denglu1_p.appendChild(denglu1_a);
-            denglu1_nav.parentNode.insertBefore(denglu1_p, denglu1_nav);
+            denglu1_center.appendChild(denglu1_a);
+            denglu1_nav.parentNode.insertBefore(denglu1_center, denglu1_nav);
         }
         add_denglu1_button();
     </script>

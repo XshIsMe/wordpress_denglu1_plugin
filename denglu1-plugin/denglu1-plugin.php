@@ -4,7 +4,7 @@
     Plugin Name: denglu1-plugin
     Description: login by denglu1
     Author: Oah
-    Version: 0.8
+    Version: 0.9
     Author URI: https://xshisme.github.io/
     License: GPLv3
  **/

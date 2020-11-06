@@ -13,9 +13,14 @@ function denglu1_plugin_options_validate($input)
  */
 function denglu1_plugin_section_text()
 {
-?>
-    <p>登录易设置</p>
-<?php
+    echo '<hr>';
+    echo '<p>' . '应用的登录地址：' . home_url('/denglu1_login') . '</p>';
+    echo '<p>' . '登录重定向地址：' . home_url('/denglu1_loginByToken') . '</p>';
+    echo '<p>' . '应用的注册地址：' . home_url('/denglu1_register') . '</p>';
+    echo '<p>' . '注册重定向地址：' . home_url('/denglu1_loginByToken') . '</p>';
+    echo '<p>' . '应用的改密地址：' . home_url('/denglu1_modifyPass') . '</p>';
+    echo '<p>' . '改密重定向地址：' . home_url('/denglu1_loginByToken') . '</p>';
+    echo '<hr>';
 }
 
 /**
@@ -68,7 +73,7 @@ function denglu1_plugin_setting_privateKey()
 function denglu1_register_settings()
 {
     register_setting('denglu1_plugin_options', 'denglu1_plugin_options', 'denglu1_plugin_options_validate');
-    add_settings_section('denglu1_plugin_settings', '登录易设置', 'denglu1_plugin_section_text', 'denglu1_plugin');
+    add_settings_section('denglu1_plugin_settings', '', 'denglu1_plugin_section_text', 'denglu1_plugin');
 
     add_settings_field('denglu1_plugin_setting_appId', 'appId', 'denglu1_plugin_setting_appId', 'denglu1_plugin', 'denglu1_plugin_settings');
     add_settings_field('denglu1_plugin_setting_sUrl', 'sUrl', 'denglu1_plugin_setting_sUrl', 'denglu1_plugin', 'denglu1_plugin_settings');
@@ -82,7 +87,7 @@ function denglu1_register_settings()
 function denglu1_render_settings_page()
 {
 ?>
-    <h1>登录易设置</h1>
+    <h2>登录易设置</h2>
     <form action="options.php" method="post">
         <?php
         settings_fields('denglu1_plugin_options');

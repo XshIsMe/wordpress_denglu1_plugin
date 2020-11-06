@@ -19,7 +19,7 @@ function get_current_url()
         $this_page = reset(explode('?', $this_page));
     }
     // 判断端口
-    if ($_SERVER['SERVER_PORT'] != '80') {
+    if ($_SERVER['SERVER_PORT'] != '80' and $_SERVER['SERVER_PORT'] != '443') {
         $pageURL .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $this_page;
     } else {
         $pageURL .= $_SERVER['SERVER_NAME'] . $this_page;

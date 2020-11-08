@@ -7,7 +7,7 @@ function add_denglu1_button()
 {
     require_once dirname(__FILE__) . '/../config/denglu1-config.php';
 
-    $options = get_option('denglu1_plugin_options');
+    $options = get_option(PageConfig::option_name);
 ?>
     <script>
         function add_denglu1_button() {

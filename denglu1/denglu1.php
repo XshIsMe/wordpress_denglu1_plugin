@@ -1,7 +1,7 @@
 <?php
 
 /**
-    Plugin Name: denglu1-plugin
+    Plugin Name: denglu1
     Description: login by denglu1
     Author: Oah
     Version: 0.95

@@ -1,20 +1,13 @@
 <?php
 
 /**
- * @version 1.0
- * RSA AES 解密类
- * @copyright denglu1 tech
+ * 工具函数
  */
-class EncryptUtil
+
+
+// 加解密
+class Denglu1_EncryptUtil
 {
-    /**
-     * aes编码
-     * @param  string $sPassword 密码
-     * @param  string $sData     明文
-     * @param  string $sIV       加密向量
-     * @param  string $sMethod   加密方式(默认：AES-256-CFB)
-     * @return string            密文
-     */
     public static function aesEncrypt($sPassword, $sData, $sMethod = "AES-256-CFB8")
     {
         $sIV = chr(0x16) . chr(0x61) . chr(0x0F) . chr(0x3A) . chr(0x37) . chr(0x3D) . chr(0x1B) . chr(0x51) . chr(0x4A) . chr(0x39) . chr(0x5A) . chr(0x79) . chr(0x29) . chr(0x08) . chr(0x01) . chr(0x22);
@@ -24,14 +17,6 @@ class EncryptUtil
         return $sEncrypted;
     }
 
-    /**
-     * aes解码
-     * @param  string $sPassword 密码
-     * @param  string $sData     密文
-     * @param  string $sIV       加密向量
-     * @param  string $sMethod   加密方式(默认：AES-256-CFB8)
-     * @return string            明文
-     */
     public static function aesDecrypt($sPassword, $sData, $sMethod = "AES-256-CFB8")
     {
         $sIV = chr(0x16) . chr(0x61) . chr(0x0F) . chr(0x3A) . chr(0x37) . chr(0x3D) . chr(0x1B) . chr(0x51) . chr(0x4A) . chr(0x39) . chr(0x5A) . chr(0x79) . chr(0x29) . chr(0x08) . chr(0x01) . chr(0x22);
@@ -40,12 +25,6 @@ class EncryptUtil
         return $sDecrypted;
     }
 
-    /**
-     * rsa公钥加密
-     * @param  string $sPublicKey 公钥
-     * @param  string $sData      明文
-     * @return string             密文
-     */
     public static function rsaPublicKeyEncrypt($sPublicKey, $sData)
     {
         $res = openssl_get_publickey($sPublicKey);
@@ -56,12 +35,6 @@ class EncryptUtil
         return $sEncrypt;
     }
 
-    /**
-     * rsa密钥解密
-     * @param  string $sPrivateKey 密钥
-     * @param  string $sData       密文
-     * @return string              明文
-     */
     public static function rsaPrivateKeyDecrypt($sPrivateKey, $sData)
     {
         $res = openssl_get_privatekey($sPrivateKey);
@@ -71,15 +44,34 @@ class EncryptUtil
         return $sDecrypt;
     }
 
-    /**
-     * @param  string $sTextz           明文
-     * @param  string $sRasEncryptedKey 经过RSA加密后的密文
-     * @return string                   明文
-     */
     public static function rsa_aes_decrypt($sText, $sRasEncryptedKey)
     {
-        require_once dirname(__FILE__) . '/../config/denglu1-config.php';
-        $options = get_option(PageConfig::option_name);
+        require dirname(__FILE__) . '/denglu1-config.php';
+        $options = get_option($DENGLU1_CONFIG['settings_option_id']);
         return self::aesDecrypt(self::rsaPrivateKeyDecrypt($options['privateKey'], $sRasEncryptedKey), $sText);
     }
+}
+
+// 获取当前URL
+function denglu1_get_current_url()
+{
+    // 判断是否是HTTPS
+    $pageURL = 'http';
+    if ($_SERVER['HTTPS'] == 'on') {
+        $pageURL .= 's';
+    }
+    // 拼接URL
+    $pageURL .= '://';
+    $this_page = $_SERVER['REQUEST_URI'];
+    // 只取?前面的内容
+    if (strpos($this_page, '?') !== false) {
+        $this_page = reset(explode('?', $this_page));
+    }
+    // 判断端口
+    if ($_SERVER['SERVER_PORT'] != '80' and $_SERVER['SERVER_PORT'] != '443') {
+        $pageURL .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $this_page;
+    } else {
+        $pageURL .= $_SERVER['SERVER_NAME'] . $this_page;
+    }
+    return $pageURL;
 }

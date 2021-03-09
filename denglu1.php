@@ -24,5 +24,7 @@ add_action('login_footer', 'denglu1_add_button');
 add_action('admin_menu', 'denglu1_settings_page_init');
 // 初始化设置页面内容
 add_action('admin_init', 'denglu1_settings_init');
-// 激活时初始化日志文件
-register_activation_hook(__FILE__, 'denglu1_init_logfile');
+// 激活时创建数据库表
+register_activation_hook(__FILE__, 'Denglu1_DB::plugin_activation_cretable');
+// 停用时删除数据库表
+register_deactivation_hook(__FILE__, 'Denglu1_DB::plugin_deactivation_deltable');

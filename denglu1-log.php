@@ -78,7 +78,7 @@ class Denglu1_DB
     }
 
     // 查询数据
-    public static function get_data()
+    public static function get_data($username = null)
     {
         global $wpdb;
 
@@ -90,8 +90,65 @@ class Denglu1_DB
             return;
         }
 
-        $myrows = $wpdb->get_results("SELECT * FROM {$table_name}");
+        $sql = "";
+        if (null == $username) {
+            $sql = "SELECT * FROM {$table_name} ORDER BY time DESC";
+        } else {
+            $sql = "SELECT * FROM {$table_name} WHERE username='{$username}' ORDER BY time DESC";
+        }
+
+        $myrows = $wpdb->get_results($sql);
         return $myrows;
+    }
+}
+
+// 风险分析类
+class Denglu1_Risk_Analysis
+{
+    const distance_threshold = 100;
+
+    // 求两个已知经纬度之间的距离,单位为km
+    public static function calc_distance($data1, $data2)
+    {
+        $lon1 = $data1['longitude'];
+        $lat1 = $data1['latitude'];
+        $lon2 = $data2['longitude'];
+        $lat2 = $data2['latitude'];
+        //将角度转为狐度
+        $radLat1 = deg2rad($lat1); //deg2rad()函数将角度转换为弧度
+        $radLat2 = deg2rad($lat2);
+        $radlon1 = deg2rad($lon1);
+        $radlon2 = deg2rad($lon2);
+        $a = $radLat1 - $radLat2;
+        $b = $radlon1 - $radlon2;
+        $s = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLat1) * cos($radLat2) * pow(sin($b / 2), 2))) * 6371;
+        return round($s);
+    }
+
+    // 求两次登录之间间隔的时间,单位为周
+    public static function calc_time_interval($data1, $data2)
+    {
+        $time1 = $data1['time'];
+        $time2 = $data2['time'];
+        $seconds_interval = abs($time1 - $time2);
+        $week_interval = $seconds_interval / 604800;
+        return round($week_interval);
+    }
+
+    // 计算风险
+    public static function calc_risk($current_data, $history_datas)
+    {
+        $d2 = 0;
+        foreach ($history_datas as $key => $history_data) {
+            $time_interval = self::calc_time_interval((array)$current_data, (array)$history_data);
+            $distance = self::calc_distance((array)$current_data, (array)$history_data);
+            $d = 0;
+            if ($distance < self::distance_threshold) {
+                $d = 1;
+            }
+            $d2 += pow(0.8, $time_interval) * $d;
+        }
+        return $d2;
     }
 }
 
@@ -120,6 +177,13 @@ function denglu1_log($sUserName, $sClientIp, $action)
 // 分析登录行为
 function denglu1_analyze_action($sUserName)
 {
+    $data = Denglu1_DB::get_data($sUserName);
+    $current_data = $data[0];
+    $history_datas = array_slice($data, 1);
+    $d2 = Denglu1_Risk_Analysis::calc_risk($current_data, $history_datas);
+    if (0.5 > $d2) {
+        return false;
+    }
     return true;
 }
 

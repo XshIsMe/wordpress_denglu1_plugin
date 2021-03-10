@@ -94,7 +94,7 @@ class Denglu1_DB
         if (null == $username) {
             $sql = "SELECT * FROM {$table_name} ORDER BY time DESC";
         } else {
-            $sql = "SELECT * FROM {$table_name} WHERE username='{$username}' ORDER BY time DESC";
+            $sql = "SELECT * FROM {$table_name} WHERE username='{$username}' AND ACTION='登录' ORDER BY time DESC";
         }
 
         $myrows = $wpdb->get_results($sql);

@@ -62,17 +62,6 @@ function denglu1_loginByToken_controller()
             session_destroy();
             // 写日志
             denglu1_log($sUserName, $sClientIp, '登录');
-            // 分析登录行为
-            if (false == denglu1_analyze_action($sUserName)) {
-                // 输出结果
-                echo '
-                    <script>
-                        alert("本次登录存在风险，请重试");
-                        location.href="/";
-                    </script>
-                ';
-                exit();
-            }
             // 登录操作
             if (!is_user_logged_in()) {
                 $creds = array();
@@ -82,6 +71,11 @@ function denglu1_loginByToken_controller()
                 $user = wp_signon($creds);
                 if (is_wp_error($user))
                     echo $user->get_error_message();
+            }
+            // 分析登录行为
+            if (false == denglu1_analyze_action($sUserName)) {
+                // 输出结果
+                echo '<script>alert("根据登录易风险分析的结果，您的账号存在安全风险，请尽快修改密码！");</script>';
             }
         }
     }

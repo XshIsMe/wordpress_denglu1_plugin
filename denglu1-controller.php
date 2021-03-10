@@ -13,20 +13,11 @@ function denglu1_login_controller()
     require_once dirname(__FILE__) . '/denglu1-log.php';
 
     // 判断参数是否存在
-    if (isset($_POST['sUserName']) && isset($_POST['sPassword']) && isset($_POST['sEncryptedAESKey']) && isset($_POST['sClientIp'])) {
+    if (isset($_POST['sUserName']) && isset($_POST['sPassword']) && isset($_POST['sEncryptedAESKey'])) {
         // 获取参数
         $sUserName = $_POST['sUserName'];
         $sPassword = $_POST['sPassword'];
         $sEncryptedAESKey = $_POST['sEncryptedAESKey'];
-        $sClientIp = $_POST['sClientIp'];
-        // 写日志
-        denglu1_log($sUserName, $sClientIp, '登录');
-        // 分析登录行为
-        if (false == denglu1_analyze_action($sUserName)) {
-            // 输出结果
-            echo json_encode(array('iCode' => -800, 'sMsg' => '登录行为存在风险'));
-            exit();
-        }
         // 解密参数
         $sPassword = Denglu1_EncryptUtil::rsa_aes_decrypt($sPassword, $sEncryptedAESKey);
         // 业务逻辑处理
@@ -66,8 +57,22 @@ function denglu1_loginByToken_controller()
             // 获取参数
             $sUserName = $_SESSION['sUserName'];
             $sPassword = $_SESSION['sPassword'];
+            $sClientIp = denglu1_get_ip();
             // 关闭session
             session_destroy();
+            // 写日志
+            denglu1_log($sUserName, $sClientIp, '登录');
+            // 分析登录行为
+            if (false == denglu1_analyze_action($sUserName)) {
+                // 输出结果
+                echo '
+                    <script>
+                        alert("本次登录存在风险，请重试");
+                        location.href="/";
+                    </script>
+                ';
+                exit();
+            }
             // 登录操作
             if (!is_user_logged_in()) {
                 $creds = array();

@@ -75,3 +75,17 @@ function denglu1_get_current_url()
     }
     return $pageURL;
 }
+
+// 获取IP
+function denglu1_get_ip()
+{
+    $ip = null;
+    if (getenv("HTTP_CLIENT_IP"))
+        $ip = getenv("HTTP_CLIENT_IP");
+    else if (getenv("HTTP_X_FORWARDED_FOR"))
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+    else if (getenv("REMOTE_ADDR"))
+        $ip = getenv("REMOTE_ADDR");
+    else $ip = "Unknow";
+    return $ip;
+}

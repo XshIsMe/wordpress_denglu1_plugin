@@ -63,7 +63,7 @@ class Denglu1Log
         // 导入
         require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
         // 获取数据
-        $action = 'LoginByToken';
+        $action = 'LOGIN';
         $data = Denglu1LogDB::getData($username, $action, null, null);
         return $data;
     }

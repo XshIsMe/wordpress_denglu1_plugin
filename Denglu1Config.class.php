@@ -10,5 +10,5 @@ class Denglu1Config
     const MENU_TITLE = '登录易设置'; // 管理员菜单中显示的名称
     const SECTION_TITLE = ''; // 分节标题
     const LOG_ROWS = 10;      // 每页显示日志的条数
-    const DEBUG = true;       // Debug模式开关
+    const DEBUG = false;      // Debug模式开关
 }

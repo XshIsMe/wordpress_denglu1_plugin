@@ -29,7 +29,7 @@
         var hour = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours());
         var minute = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
         var second = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-        return year + '-' + month + '-' + day + ' ' + hour + ':' + month + ':' + second;
+        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
     }
 
     function denglu1LoadXMLDoc(page, func) {

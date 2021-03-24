@@ -20,6 +20,18 @@
     <span>页</span>
     <button id="denglu1-jump" class="button button-primary" onclick="denglu1Jump()">跳转</button>
 </p>
+<hr>
+<h3>导出日志</h3>
+<p>
+    <a class="button button-primary" href="<?php echo esc_html(home_url('/Denglu1ExportLog')) ?>">导出</a>
+</p>
+<h3>导入日志</h3>
+<p>
+<form action="<?php echo esc_html(home_url('/Denglu1ImportLog')) ?>" method="post" enctype="multipart/form-data">
+    <input type="file" name="denglu1-log-file">
+    <input class="button button-primary" type="submit" value="提交">
+</form>
+</p>
 <script>
     function denglu1FormatTime(timestamp) {
         var date = new Date(timestamp * 1000);

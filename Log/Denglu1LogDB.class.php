@@ -90,6 +90,9 @@ class Denglu1LogDB
         } elseif (isset($username) && isset($action)) {
             // 用于风险分析的查询
             $sql = $wpdb->prepare("SELECT * FROM {$tableName} WHERE username='%s' AND action='%s' ORDER BY time DESC", $username, $action);
+        } else {
+            // 用于导出数据库的查询
+            $sql = "SELECT * FROM {$tableName} ORDER BY time DESC";
         }
         $myrows = $wpdb->get_results($sql);
         return $myrows;

@@ -46,6 +46,14 @@ class Denglu1Log
         Denglu1LogDB::addData($data);
     }
 
+    public static function importLog($data)
+    {
+        // 导入
+        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
+        // 写入数据库
+        Denglu1LogDB::addData($data);
+    }
+
     public static function getLog($page)
     {
         // 导入
@@ -65,6 +73,15 @@ class Denglu1Log
         // 获取数据
         $action = 'LOGIN';
         $data = Denglu1LogDB::getData($username, $action, null, null);
+        return $data;
+    }
+
+    public static function getLogToExportLog()
+    {
+        // 导入
+        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
+        // 获取数据
+        $data = Denglu1LogDB::getData(null, null, null, null);
         return $data;
     }
 }

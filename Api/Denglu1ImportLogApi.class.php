@@ -39,6 +39,13 @@ class Denglu1ImportLogApi
         fgetcsv($handle);
         // 读取数据
         while ($row = fgetcsv($handle)) {
+            // 判断长度
+            if (7 != count($row)) {
+                // 输出结果
+                echo '<script>alert("导入失败");history.go(-1);</script>';
+                // 结束
+                exit();
+            }
             // 生成日志
             $data['username'] = $row[1];
             $data['ip'] = $row[2];
@@ -50,8 +57,9 @@ class Denglu1ImportLogApi
             // 导入数据库
             Denglu1Log::importLog($data);
         }
-        // 结束
+        // 输出结果
         echo '<script>alert("导入成功");history.go(-1);</script>';
+        // 结束
         exit();
     }
 }

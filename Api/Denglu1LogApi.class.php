@@ -31,7 +31,7 @@ class Denglu1LogApi
         self::authentication();
         // 获取参数
         $page = self::getParams();
-        $data = Denglu1Log::getLog($page);
+        $data = Denglu1Log::getLog(null, null, $page);
         // 输出结果
         echo json_encode($data);
         // 结束

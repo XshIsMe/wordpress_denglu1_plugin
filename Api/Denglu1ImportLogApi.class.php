@@ -16,7 +16,7 @@ class Denglu1ImportLogApi
         // 判断参数是否符合条件
         if (!isset($_FILES['denglu1-log-file']) || $_FILES['denglu1-log-file']['error'] > 0) {
             // 输出结果
-            echo json_encode(array('iCode' => -700, 'sMsg' => '缺少参数'));
+            echo '<script>alert("导入失败");history.go(-1);</script>';
             exit();
         }
         // 获取参数

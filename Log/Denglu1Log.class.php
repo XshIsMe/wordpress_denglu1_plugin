@@ -54,34 +54,25 @@ class Denglu1Log
         Denglu1LogDB::addData($data);
     }
 
-    public static function getLog($page)
+    public static function getLog($username = null, $action = null, $page = null)
     {
         // 导入
         require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
         require_once dirname(__FILE__) . '/../Denglu1Config.class.php';
         // 获取数据
-        $logRows = Denglu1Config::LOG_ROWS;
-        $offset = $logRows * ($page - 1);
-        $data = Denglu1LogDB::getData(null, null, $offset, $logRows);
-        return $data;
-    }
-
-    public static function getLogToLoginByTokenRiskAnalysis($username)
-    {
-        // 导入
-        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
-        // 获取数据
-        $action = 'LOGIN';
-        $data = Denglu1LogDB::getData($username, $action, null, null);
-        return $data;
-    }
-
-    public static function getLogToExportLog()
-    {
-        // 导入
-        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
-        // 获取数据
-        $data = Denglu1LogDB::getData(null, null, null, null);
+        $date = null;
+        if (isset($page)) {
+            // 分页查询
+            $logRows = Denglu1Config::LOG_ROWS;
+            $offset = $logRows * ($page - 1);
+            $data = Denglu1LogDB::getData(null, null, $offset, $logRows);
+        } elseif (isset($username) && isset($action)) {
+            // 用于风险分析的查询
+            $data = Denglu1LogDB::getData($username, $action, null, null);
+        } else {
+            // 用于导出数据库的查询
+            $data = Denglu1LogDB::getData(null, null, null, null);
+        }
         return $data;
     }
 }

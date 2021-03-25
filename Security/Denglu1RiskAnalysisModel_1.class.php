@@ -1,6 +1,6 @@
 <?php
 
-class Denglu1RiskAnalysisModel1
+class Denglu1RiskAnalysisModel_1
 {
     // 距离区间
     const DISTANCE_THRESHOLD = 100;
@@ -47,5 +47,25 @@ class Denglu1RiskAnalysisModel1
             $d2 += pow(0.8, $timeInterval) * $d;
         }
         return $d2;
+    }
+
+    public static function getResult($username)
+    {
+        // 导入
+        require_once dirname(__FILE__) . '/../Log/Denglu1Log.class.php';
+        // 获取数据
+        $data = Denglu1Log::getLog($username, 'LOGIN', null);
+        $currentData = $data[0];
+        $historyDatas = array_slice($data, 1);
+        // 计算风险
+        $d2 = 1;
+        if (1 <= count($historyDatas)) {
+            $d2 = self::calcRisk($currentData, $historyDatas);
+        }
+        // 根据计算结果给出答案
+        if (0.5 > $d2) {
+            return false;
+        }
+        return true;
     }
 }

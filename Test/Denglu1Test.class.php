@@ -30,7 +30,7 @@ class Denglu1Test
         require_once dirname(__FILE__) . '/../Log/Denglu1Log.class.php';
         // 显示结果
         $page = 1;
-        $data = Denglu1Log::getLog($page);
+        $data = Denglu1Log::getLog(null, null, $page);
         // 输出结果
         echo json_encode($data);
         // 结束

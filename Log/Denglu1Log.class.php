@@ -76,34 +76,40 @@ class Denglu1Log
     }
 
     /**
-     * 获取日志
-     * 当$username和$action为null，$page不为null时，分页查询
-     * 当$page为null，$username和$action不为null时，用于风险分析的查询
-     * 当所有参数为null时，用于导出数据库的查询
+     * 分页查询
+     * @param  int $page 页码
+     * @return mixed     查询结果
+     */
+    public static function getLog($page)
+    {
+        $logRows = Denglu1Config::LOG_ROWS;
+        $offset = $logRows * ($page - 1);
+        $data = Denglu1LogDB::getData($offset, $logRows);
+        // 返回
+        return $data;
+    }
+
+    /**
+     * 用于导出数据库的查询
+     * @return mixed 查询结果
+     */
+    public static function exportLog()
+    {
+        $data = Denglu1LogDB::exportData();
+        // 返回
+        return $data;
+    }
+
+    /**
+     * 用于1号风险分析模块的查询
      * @param  string $username 用户名
      * @param  string $action   动作
-     * @param  int    $page     页码
      * @return mixed            查询结果
      */
-    public static function getLog($username = null, $action = null, $page = null)
+    public static function getLog_RiskAnalysisModel_1($username, $action)
     {
-        // 导入
-        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
-        require_once dirname(__FILE__) . '/../Denglu1Config.class.php';
-        // 获取数据
-        $date = null;
-        if (isset($page)) {
-            // 分页查询
-            $logRows = Denglu1Config::LOG_ROWS;
-            $offset = $logRows * ($page - 1);
-            $data = Denglu1LogDB::getData(null, null, $offset, $logRows);
-        } elseif (isset($username) && isset($action)) {
-            // 用于风险分析的查询
-            $data = Denglu1LogDB::getData($username, $action, null, null);
-        } else {
-            // 用于导出数据库的查询
-            $data = Denglu1LogDB::getData(null, null, null, null);
-        }
+        $data = Denglu1LogDB::getData_RiskAnalysisModel_1($username, $action);
+        // 返回
         return $data;
     }
 }

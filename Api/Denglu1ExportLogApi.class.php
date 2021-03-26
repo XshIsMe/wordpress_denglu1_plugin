@@ -37,7 +37,7 @@ class Denglu1ExportLogApi
         // 打开输出
         $output = fopen('php://output', 'w');
         // 读取数据
-        $rows = Denglu1Log::getLog(null, null, null);
+        $rows = Denglu1Log::exportLog();
         // 输出csv头部
         fputcsv($output, array('id', 'username', 'ip', 'longitude', 'latitude', 'action', 'result', 'time'));
         // 输出csv内容

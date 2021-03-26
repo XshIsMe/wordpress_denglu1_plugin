@@ -81,7 +81,7 @@ class Denglu1RiskAnalysisModel_1
         // 导入
         require_once dirname(__FILE__) . '/../Log/Denglu1Log.class.php';
         // 获取数据
-        $data = Denglu1Log::getLog($username, 'LOGIN', null);
+        $data = Denglu1Log::getLog_RiskAnalysisModel_1($username, 'LOGIN');
         $currentData = $data[0];
         $historyDatas = array_slice($data, 1);
         // 计算风险

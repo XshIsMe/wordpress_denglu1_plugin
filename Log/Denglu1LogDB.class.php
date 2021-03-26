@@ -86,17 +86,11 @@ class Denglu1LogDB
     }
 
     /**
-     * 查询数据
-     * 当$username和$action为null，$offset和$rows不为null时，分页查询
-     * 当$offset和$rows为null，$username和$action不为null时，用于风险分析的查询
-     * 当所有参数为null时，用于导出数据库的查询
-     * @param string $username 用户名
-     * @param string $action   动作
-     * @param int    $offset   起始数据行位置
-     * @param int    $rows     数据行数
-     * @return mixed           查询结果
+     * 执行SQL语句
+     * @param  string $sql SQL语句
+     * @return mixed       查询结果
      */
-    public static function getData($username = null, $action = null, $offset = null, $rows = null)
+    public static function execSQL($sql)
     {
         // 获取数据库对象
         global $wpdb;
@@ -107,18 +101,64 @@ class Denglu1LogDB
             return;
         }
         // 查询数据
-        $sql = null;
-        if (isset($offset) && isset($rows)) {
-            // 分页查询
-            $sql = $wpdb->prepare("SELECT * FROM {$tableName} ORDER BY time DESC LIMIT %d, %d", $offset, $rows);
-        } elseif (isset($username) && isset($action)) {
-            // 用于风险分析的查询
-            $sql = $wpdb->prepare("SELECT * FROM {$tableName} WHERE username='%s' AND action='%s' ORDER BY time DESC", $username, $action);
-        } else {
-            // 用于导出数据库的查询
-            $sql = "SELECT * FROM {$tableName} ORDER BY time DESC";
-        }
-        $myrows = $wpdb->get_results($sql);
-        return $myrows;
+        $results = $wpdb->get_results($sql);
+        // 返回
+        return $results;
+    }
+
+    /**
+     * 分页查询
+     * @param  string $offset 起始位置
+     * @param  string $rows   数据条数
+     * @return mixed          查询结果
+     */
+    public static function getData($offset, $rows)
+    {
+        // 获取数据库对象
+        global $wpdb;
+        // 表名
+        $tableName = self::TABLE_NAME;
+        // 查询数据
+        $sql = $wpdb->prepare("SELECT * FROM {$tableName} ORDER BY time DESC LIMIT %d, %d", $offset, $rows);
+        // 查询数据
+        $results = self::execSQL($sql);
+        // 返回
+        return $results;
+    }
+
+    /**
+     * 用于导出数据库的查询
+     * @return mixed 查询结果
+     */
+    public static function exportData()
+    {
+        // 表名
+        $tableName = self::TABLE_NAME;
+        // SQL语句
+        $sql = "SELECT * FROM {$tableName} ORDER BY time DESC";
+        // 查询数据
+        $results = self::execSQL($sql);
+        // 返回
+        return $results;
+    }
+
+    /**
+     * 用于1号风险分析模块的查询
+     * @param  string $username 用户名
+     * @param  string $action   动作
+     * @return mixed            查询结果
+     */
+    public static function getData_RiskAnalysisModel_1($username, $action)
+    {
+        // 获取数据库对象
+        global $wpdb;
+        // 表名
+        $tableName = self::TABLE_NAME;
+        // 查询数据
+        $sql = $wpdb->prepare("SELECT * FROM {$tableName} WHERE username='%s' AND action='%s' ORDER BY time DESC", $username, $action);
+        // 查询数据
+        $results = self::execSQL($sql);
+        // 返回
+        return $results;
     }
 }

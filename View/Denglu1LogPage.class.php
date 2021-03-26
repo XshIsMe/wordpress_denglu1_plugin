@@ -1,7 +1,15 @@
 <?php
+
+/**
+ * @version 1.0
+ * 登录易日志页面类
+ * @copyright denglu1 tech
+ */
 class Denglu1LogPage
 {
-    // 展示日志
+    /**
+     * 显示页面
+     */
     public static function show()
     {
         // 导入

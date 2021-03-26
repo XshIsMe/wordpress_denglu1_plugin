@@ -1,8 +1,15 @@
 <?php
 
+/**
+ * @version 1.0
+ * 登录易设置页面类
+ * @copyright denglu1 tech
+ */
 class Denglu1SettingsPage
 {
-    // 页面回调函数
+    /**
+     * 页面回调函数
+     */
     public static function denglu1SettingsPageCB()
     {
         // 导入
@@ -12,7 +19,9 @@ class Denglu1SettingsPage
         require_once dirname(__FILE__) . '/Template/Denglu1SettingsPageTemplate.php';
     }
 
-    // 分节回调函数
+    /**
+     * 分节回调函数
+     */
     public static function denglu1SettingsSectionCB()
     {
         // 导入
@@ -24,7 +33,9 @@ class Denglu1SettingsPage
         require_once dirname(__FILE__) . '/Template/Denglu1SettingsSectionTemplate.php';
     }
 
-    // 设置页面初始化函数
+    /**
+     * 设置页面初始化函数
+     */
     public static function denglu1SettingsPageInit()
     {
         // 导入
@@ -39,7 +50,9 @@ class Denglu1SettingsPage
         );
     }
 
-    // 设置页面内容初始化函数
+    /**
+     * 设置页面内容初始化函数
+     */
     public static function denglu1SettingsInit()
     {
         // 导入

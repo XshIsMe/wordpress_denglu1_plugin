@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @version 1.0
+ * 登录易登录按钮页面类
+ * @copyright denglu1 tech
+ */
 class Denglu1LoginPage
 {
+    /**
+     * 显示页面
+     */
     public static function show()
     {
         // 导入

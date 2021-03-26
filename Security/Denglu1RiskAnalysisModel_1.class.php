@@ -1,11 +1,23 @@
 <?php
 
+/**
+ * @version 1.0
+ * 1号风险分析模型类
+ * @copyright denglu1 tech
+ */
 class Denglu1RiskAnalysisModel_1
 {
-    // 距离区间
+    /**
+     * 两地危险距离阈值（单位KM）
+     */
     const DISTANCE_THRESHOLD = 100;
 
-    // 求两个已知经纬度之间的距离,单位为km
+    /**
+     * 求两个已知经纬度之间的距离
+     * @param  array $data1 数据1
+     * @param  array $data1 数据2
+     * @return float        两地之间距离（单位KM）
+     */
     public static function calcDistance($data1, $data2)
     {
         $lon1 = $data1['longitude'];
@@ -23,7 +35,12 @@ class Denglu1RiskAnalysisModel_1
         return round($s);
     }
 
-    // 求两次登录之间间隔的时间,单位为周
+    /**
+     * 求两次登录之间间隔的时间
+     * @param  array $data1 数据1
+     * @param  array $data1 数据2
+     * @return float        两次登录间隔时间（单位周）
+     */
     public static function calcTimeInterval($data1, $data2)
     {
         $time1 = $data1['time'];
@@ -33,7 +50,12 @@ class Denglu1RiskAnalysisModel_1
         return round($week_interval);
     }
 
-    // 计算风险
+    /**
+     * 计算风险系数
+     * @param  mixed $currentData 本次登录的日志
+     * @param  array $historyData 历史登录日志数组
+     * @return float              风险系数（小于0.5为存在风险）
+     */
     public static function calcRisk($currentData, $historyDatas)
     {
         $d2 = 0;
@@ -49,7 +71,12 @@ class Denglu1RiskAnalysisModel_1
         return $d2;
     }
 
-    public static function getResult($username)
+    /**
+     * 获取风险分析结果
+     * @param  string $username 用户名
+     * @return bool             风险分析结果
+     */
+    public static function getRiskAnalysisResult($username)
     {
         // 导入
         require_once dirname(__FILE__) . '/../Log/Denglu1Log.class.php';

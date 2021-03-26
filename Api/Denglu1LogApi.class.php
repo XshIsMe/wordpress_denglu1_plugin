@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @version 1.0
+ * 查看日志API类
+ * @copyright denglu1 tech
+ */
 class Denglu1LogApi
 {
+    /**
+     * 验证当前用户是否有权限访问此API
+     */
     public static function authentication()
     {
         if (!current_user_can('manage_options')) {
@@ -11,6 +19,10 @@ class Denglu1LogApi
         }
     }
 
+    /**
+     * 获取请求的参数
+     * @return int 页码
+     */
     public static function getParams()
     {
         $page = 1;
@@ -23,6 +35,9 @@ class Denglu1LogApi
         return $page;
     }
 
+    /**
+     * API服务
+     */
     public static function service()
     {
         // 导入

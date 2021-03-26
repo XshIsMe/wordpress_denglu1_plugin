@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @version 1.0
+ * 测试用API类
+ * @copyright denglu1 tech
+ */
 class Denglu1TestApi
 {
+    /**
+     * 验证当前用户是否有权限访问此API
+     */
     public static function authentication()
     {
         // 导入
@@ -14,6 +22,10 @@ class Denglu1TestApi
         }
     }
 
+    /**
+     * 获取请求的参数
+     * @return string 动作
+     */
     public static function getParams()
     {
         $action = 'show_log';
@@ -23,6 +35,9 @@ class Denglu1TestApi
         return $action;
     }
 
+    /**
+     * API服务
+     */
     public static function service()
     {
         // 导入

@@ -1,7 +1,17 @@
 <?php
 
+/**
+ * @version 1.0
+ * 工具类
+ * @copyright denglu1 tech
+ */
 class Denglu1Util
 {
+    /**
+     * 根据IP获取经纬度
+     * @param  string $ip IP地址
+     * @return array      经纬度数组
+     */
     public static function getLocationByIP($ip)
     {
         $lon = '-1';
@@ -35,6 +45,10 @@ class Denglu1Util
         );
     }
 
+    /**
+     * 获取IP地址
+     * @return string IP地址
+     */
     public static function getIp()
     {
         $ip = null;
@@ -48,6 +62,10 @@ class Denglu1Util
         return $ip;
     }
 
+    /**
+     * 获取当前URL
+     * @return string 当前URL
+     */
     public static function getCurrentUrl()
     {
         // 判断是否是HTTPS

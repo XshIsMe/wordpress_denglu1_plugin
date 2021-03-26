@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @version 1.0
+ * API路由类
+ * @copyright denglu1 tech
+ */
 class Denglu1ApiRouter
 {
+    /**
+     * 根据URL调用对应的服务
+     */
     public static function route()
     {
         // 导入

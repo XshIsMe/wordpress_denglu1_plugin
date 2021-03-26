@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * @version 1.0
+ * 扫码注册API类
+ * @copyright denglu1 tech
+ */
 class Denglu1RegisterApi
 {
+    /**
+     * 获取请求的参数
+     * @return array 参数数组
+     */
     public static function getParams()
     {
         // 导入
@@ -36,6 +45,12 @@ class Denglu1RegisterApi
         );
     }
 
+    /**
+     * 记录日志
+     * @param string $username 用户名
+     * @param string $ip       IP地址
+     * @param bool   $result   执行结果
+     */
     public static function log($username, $ip, $result)
     {
         // 导入
@@ -44,6 +59,12 @@ class Denglu1RegisterApi
         Denglu1Log::addLog($username, $ip, $result, 'DENGLU1_REGISTER_SCAN');
     }
 
+    /**
+     * 验证并新建用户
+     * @param  string $username    用户名
+     * @param  string $password    密码
+     * @return bool                执行结果
+     */
     public static function logic($username, $password)
     {
         $userData = array(
@@ -54,6 +75,9 @@ class Denglu1RegisterApi
         return !is_wp_error($registerResult);
     }
 
+    /**
+     * API服务
+     */
     public static function service()
     {
         // 获取参数

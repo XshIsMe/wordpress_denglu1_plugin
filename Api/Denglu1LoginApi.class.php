@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * @version 1.0
+ * 扫码登录API类
+ * @copyright denglu1 tech
+ */
 class Denglu1LoginApi
 {
+    /**
+     * 获取请求的参数
+     * @return array 参数数组
+     */
     public static function getParams()
     {
         // 导入
@@ -36,6 +45,12 @@ class Denglu1LoginApi
         );
     }
 
+    /**
+     * 记录日志
+     * @param string $username 用户名
+     * @param string $ip       IP地址
+     * @param bool   $result   执行结果
+     */
     public static function log($username, $ip, $result)
     {
         // 导入
@@ -44,11 +59,20 @@ class Denglu1LoginApi
         Denglu1Log::addLog($username, $ip, $result, 'DENGLU1_LOGIN_SCAN');
     }
 
+    /**
+     * 判断用户名密码是否正确
+     * @param  string $username 用户名
+     * @param  string $password 密码
+     * @return bool             判断结果
+     */
     public static function logic($username, $password)
     {
         return user_pass_ok($username, $password);
     }
 
+    /**
+     * API服务
+     */
     public static function service()
     {
         // 获取参数

@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * @version 1.0
+ * 一键修改密码API类
+ * @copyright denglu1 tech
+ */
 class Denglu1ModifyPasswordApi
 {
+    /**
+     * 获取请求的参数
+     * @return array 参数数组
+     */
     public static function getParams()
     {
         // 导入
@@ -40,6 +49,12 @@ class Denglu1ModifyPasswordApi
         );
     }
 
+    /**
+     * 记录日志
+     * @param string $username 用户名
+     * @param string $ip       IP地址
+     * @param bool   $result   执行结果
+     */
     public static function log($username, $ip, $result)
     {
         // 导入
@@ -48,6 +63,13 @@ class Denglu1ModifyPasswordApi
         Denglu1Log::addLog($username, $ip, $result, 'DENGLU1_MODIFY_PASSWORD_SCAN');
     }
 
+    /**
+     * 验证并修改密码
+     * @param  string $username    用户名
+     * @param  string $oldPassword 旧密码
+     * @param  string $newPassword 新密码
+     * @return bool                执行结果
+     */
     public static function logic($username, $oldPassword, $newPassword)
     {
         if (user_pass_ok($username, $oldPassword)) {
@@ -61,6 +83,9 @@ class Denglu1ModifyPasswordApi
         return false;
     }
 
+    /**
+     * API服务
+     */
     public static function service()
     {
         // 获取参数

@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * @version 1.0
+ * 日志数据库类
+ * @copyright denglu1 tech
+ */
 class Denglu1LogDB
 {
-    // 表名
+    /**
+     * 数据库表名
+     */
     const TABLE_NAME = 'wp_denglu1_login_log';
 
-    // 激活插件时创建表
+    /**
+     * 激活插件时创建表
+     */
     public static function pluginActivationCretable()
     {
         // 获取数据库对象
@@ -44,7 +53,9 @@ class Denglu1LogDB
         dbDelta($sql);
     }
 
-    // 停用插件时删除表
+    /**
+     * 停用插件时删除表
+     */
     public static function pluginDeactivationDeltable()
     {
         // 获取数据库对象
@@ -56,7 +67,10 @@ class Denglu1LogDB
         $wpdb->query($theRemovalQuery);
     }
 
-    // 插入数据
+    /**
+     * 插入数据
+     * @param string 一行数据数组
+     */
     public static function addData($data)
     {
         // 获取数据库对象
@@ -71,7 +85,17 @@ class Denglu1LogDB
         $wpdb->insert(self::TABLE_NAME, $data);
     }
 
-    // 查询数据
+    /**
+     * 查询数据
+     * 当$username和$action为null，$offset和$rows不为null时，分页查询
+     * 当$offset和$rows为null，$username和$action不为null时，用于风险分析的查询
+     * 当所有参数为null时，用于导出数据库的查询
+     * @param string $username 用户名
+     * @param string $action   动作
+     * @param int    $offset   起始数据行位置
+     * @param int    $rows     数据行数
+     * @return mixed           查询结果
+     */
     public static function getData($username = null, $action = null, $offset = null, $rows = null)
     {
         // 获取数据库对象

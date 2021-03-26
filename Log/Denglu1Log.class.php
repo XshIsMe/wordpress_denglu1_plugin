@@ -1,7 +1,17 @@
 <?php
 
+/**
+ * @version 1.0
+ * 日志类
+ * @copyright denglu1 tech
+ */
 class Denglu1Log
 {
+    /**
+     * 记录登录日志
+     * @param string $username 用户名
+     * @param string $password 密码
+     */
     public static function logKeyboardLogin($username, $password)
     {
         // 导入
@@ -23,6 +33,13 @@ class Denglu1Log
         self::addLog($username, $ip, $result, 'LOGIN');
     }
 
+    /**
+     * 插入一条日志
+     * @param string $username 用户名
+     * @param string $ip       IP地址
+     * @param bool   $result   执行结果
+     * @param string $action   动作
+     */
     public static function addLog($username, $ip, $result, $action)
     {
         // 导入
@@ -46,6 +63,10 @@ class Denglu1Log
         Denglu1LogDB::addData($data);
     }
 
+    /**
+     * 导入日志
+     * @param array 一条日志数组
+     */
     public static function importLog($data)
     {
         // 导入
@@ -54,6 +75,16 @@ class Denglu1Log
         Denglu1LogDB::addData($data);
     }
 
+    /**
+     * 获取日志
+     * 当$username和$action为null，$page不为null时，分页查询
+     * 当$page为null，$username和$action不为null时，用于风险分析的查询
+     * 当所有参数为null时，用于导出数据库的查询
+     * @param  string $username 用户名
+     * @param  string $action   动作
+     * @param  int    $page     页码
+     * @return mixed            查询结果
+     */
     public static function getLog($username = null, $action = null, $page = null)
     {
         // 导入

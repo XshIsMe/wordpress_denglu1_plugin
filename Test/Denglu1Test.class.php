@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @version 1.0
+ * 测试用逻辑类
+ * @copyright denglu1 tech
+ */
 class Denglu1Test
 {
+    /**
+     * 随机插入5条日志
+     */
     public static function addLog()
     {
         // 导入
@@ -24,6 +32,9 @@ class Denglu1Test
         exit();
     }
 
+    /**
+     * 查看日志
+     */
     public static function showLog()
     {
         // 导入

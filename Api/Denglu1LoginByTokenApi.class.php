@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * @version 1.0
+ * Token登录API类
+ * @copyright denglu1 tech
+ */
 class Denglu1LoginByTokenApi
 {
+    /**
+     * 获取请求的参数
+     * @return array 参数数组
+     */
     public static function getParams()
     {
         // 导入
@@ -34,6 +43,12 @@ class Denglu1LoginByTokenApi
         );
     }
 
+    /**
+     * 记录日志
+     * @param string $username 用户名
+     * @param string $ip       IP地址
+     * @param bool   $result   执行结果
+     */
     public static function log($username, $ip, $result)
     {
         // 导入
@@ -42,11 +57,32 @@ class Denglu1LoginByTokenApi
         Denglu1Log::addLog($username, $ip, $result, 'LoginByToken');
     }
 
-    public static function logic()
+    /**
+     * 登录账号
+     * @param  string $username 用户名
+     * @param  string $password 密码
+     * @return bool            登录结果
+     */
+    public static function logic($username, $password)
     {
-        return !is_user_logged_in();
+        if (!is_user_logged_in()) {
+            $creds = array();
+            $creds['user_login'] = $username;
+            $creds['user_password'] = $password;
+            $creds['remember'] = false;
+            $user = wp_signon($creds);
+            if (is_wp_error($user)) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * API服务
+     */
     public static function service()
     {
         // 导入
@@ -57,24 +93,16 @@ class Denglu1LoginByTokenApi
         $password = $params['password'];
         $ip = $params['ip'];
         // 验证参数
-        $result = self::logic();
+        $result = self::logic($username, $password);
         // 处理结果
-        if ($result) {
-            $creds = array();
-            $creds['user_login'] = $username;
-            $creds['user_password'] = $password;
-            $creds['remember'] = false;
-            $user = wp_signon($creds);
-            if (is_wp_error($user))
-                echo $user->get_error_message();
-        } else {
+        if (!$result) {
             // 输出结果
             echo '<script>alert("当前已登录其他账号");</script>';
         }
         // 写日志
         // self::log($username, $ip, $result);
         // 分析登录行为
-        $riskAnalysisResult = Denglu1Security::loginByTokenRiskAnalysis($username);
+        $riskAnalysisResult = Denglu1Security::loginRiskAnalysis($username);
         if (!$riskAnalysisResult) {
             // 输出结果
             echo '<script>alert("根据登录易风险分析的结果，您的账号存在安全风险，请尽快修改密码！");</script>';

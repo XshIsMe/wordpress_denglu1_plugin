@@ -1,7 +1,7 @@
 === denglu1 ===
 Contributors: Oah
 Tags: denglu1, login, security, easy
-Requires at least: 5.5
+Requires at least: 5.7.1
 Tested up to: 5.7.1
 Requires PHP: 7.4.15
 Stable tag: 1.0

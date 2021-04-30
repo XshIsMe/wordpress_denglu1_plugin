@@ -67,7 +67,11 @@ class Denglu1LoginApi
      */
     public static function logic($username, $password)
     {
-        return user_pass_ok($username, $password);
+        if (is_wp_error(wp_authenticate($username, $password))) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**

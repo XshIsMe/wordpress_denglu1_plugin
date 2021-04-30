@@ -72,9 +72,9 @@ class Denglu1ModifyPasswordApi
      */
     public static function logic($username, $oldPassword, $newPassword)
     {
-        if (user_pass_ok($username, $oldPassword)) {
+        if (!is_wp_error(wp_authenticate($username, $oldPassword))) {
             // 获取用户ID
-            $user = get_userdatabylogin($username);
+            $user = get_user_by('login', $username);
             $userId = $user->ID;
             // 更新用户
             wp_set_password($newPassword,  $userId);

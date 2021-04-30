@@ -29,11 +29,11 @@ class Denglu1ModifyPasswordApi
             exit();
         }
         // 获取参数
-        $username = $_POST['sUserName'];
-        $oldPassword = $_POST['sOldPassword'];
-        $newPassword = $_POST['sNewPassword'];
-        $encryptedAESKey = $_POST['sEncryptedAESKey'];
-        $ip = $_POST['sClientIp'];
+        $username = sanitize_text_field($_POST['sUserName']);
+        $oldPassword = sanitize_text_field($_POST['sOldPassword']);
+        $newPassword = sanitize_text_field($_POST['sNewPassword']);
+        $encryptedAESKey = sanitize_text_field($_POST['sEncryptedAESKey']);
+        $ip = sanitize_text_field($_POST['sClientIp']);
         // 获取私钥
         $options = get_option(Denglu1Config::SETTINGS_OPTION_ID);
         $privateKey = $options['privateKey'];

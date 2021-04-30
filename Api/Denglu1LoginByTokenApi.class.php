@@ -22,7 +22,7 @@ class Denglu1LoginByTokenApi
             exit();
         }
         // 判断session中的参数是否存在
-        $sessionId = $_GET['sToken'];
+        $sessionId = sanitize_text_field($_GET['sToken']);
         session_id($sessionId);
         session_start();
         if (!(isset($_SESSION['username']) && isset($_SESSION['password']))) {
@@ -31,8 +31,8 @@ class Denglu1LoginByTokenApi
             exit();
         }
         // 获取参数
-        $username = $_SESSION['username'];
-        $password = $_SESSION['password'];
+        $username = sanitize_text_field($_SESSION['username']);
+        $password = sanitize_text_field($_SESSION['password']);
         $ip = Denglu1Util::getIp();
         session_destroy();
         // 返回

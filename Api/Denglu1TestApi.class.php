@@ -30,7 +30,7 @@ class Denglu1TestApi
     {
         $action = 'show_log';
         if (isset($_GET['action'])) {
-            $action = $_GET['action'];
+            $action = sanitize_text_field($_GET['action']);
         }
         return $action;
     }

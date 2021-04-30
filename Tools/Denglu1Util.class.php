@@ -53,11 +53,11 @@ class Denglu1Util
     {
         $ip = null;
         if (isset($_SERVER['HTTP_CLIENT_IP']))
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
+            $ip = sanitize_text_field($_SERVER['HTTP_CLIENT_IP']);
         else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            $ip = sanitize_text_field($_SERVER['HTTP_X_FORWARDED_FOR']);
         else if (isset($_SERVER['REMOTE_ADDR']))
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = sanitize_text_field($_SERVER['REMOTE_ADDR']);
         else $ip = "Unknow";
         return $ip;
     }
@@ -77,7 +77,7 @@ class Denglu1Util
         $pageURL .= '://';
         $thisPage = '';
         if (isset($_SERVER['REQUEST_URI'])) {
-            $thisPage = $_SERVER['REQUEST_URI'];
+            $thisPage = sanitize_text_field($_SERVER['REQUEST_URI']);
         }
         // 只取?前面的内容
         if (strpos($thisPage, '?') !== false) {
@@ -91,9 +91,9 @@ class Denglu1Util
             && isset($_SERVER['SERVER_PORT'])
             && $_SERVER['SERVER_PORT'] != '443'
         ) {
-            $pageURL .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $thisPage;
+            $pageURL .= sanitize_text_field($_SERVER['SERVER_NAME']) . ':' . sanitize_text_field($_SERVER['SERVER_PORT']) . $thisPage;
         } else {
-            $pageURL .= $_SERVER['SERVER_NAME'] . $thisPage;
+            $pageURL .= sanitize_text_field($_SERVER['SERVER_NAME']) . $thisPage;
         }
         return $pageURL;
     }

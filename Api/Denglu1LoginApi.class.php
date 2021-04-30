@@ -28,10 +28,10 @@ class Denglu1LoginApi
             exit();
         }
         // 获取参数
-        $username = $_POST['sUserName'];
-        $password = $_POST['sPassword'];
-        $encryptedAESKey = $_POST['sEncryptedAESKey'];
-        $ip = $_POST['sClientIp'];
+        $username = sanitize_text_field($_POST['sUserName']);
+        $password = sanitize_text_field($_POST['sPassword']);
+        $encryptedAESKey = sanitize_text_field($_POST['sEncryptedAESKey']);
+        $ip = sanitize_text_field($_POST['sClientIp']);
         // 获取私钥
         $options = get_option(Denglu1Config::SETTINGS_OPTION_ID);
         $privateKey = $options['privateKey'];

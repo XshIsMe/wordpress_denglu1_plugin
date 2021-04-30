@@ -82,6 +82,9 @@ class Denglu1Log
      */
     public static function getLog($page)
     {
+        // 导入
+        require_once dirname(__FILE__) . '/../Denglu1Config.class.php';
+        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
         $logRows = Denglu1Config::LOG_ROWS;
         $offset = $logRows * ($page - 1);
         $data = Denglu1LogDB::getData($offset, $logRows);
@@ -95,6 +98,8 @@ class Denglu1Log
      */
     public static function exportLog()
     {
+        // 导入
+        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
         $data = Denglu1LogDB::exportData();
         // 返回
         return $data;
@@ -108,6 +113,8 @@ class Denglu1Log
      */
     public static function getLog_RiskAnalysisModel_1($username, $action)
     {
+        // 导入
+        require_once dirname(__FILE__) . '/Denglu1LogDB.class.php';
         $data = Denglu1LogDB::getData_RiskAnalysisModel_1($username, $action);
         // 返回
         return $data;

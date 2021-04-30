@@ -55,7 +55,7 @@ class Denglu1ImportLogApi
         // 读取数据
         while ($row = fgetcsv($handle)) {
             // 判断长度
-            if (7 != count($row)) {
+            if (8 != count($row)) {
                 // 输出结果
                 echo '<script>alert("导入失败");history.go(-1);</script>';
                 // 结束

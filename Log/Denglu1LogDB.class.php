@@ -46,9 +46,6 @@ class Denglu1LogDB
                 UNIQUE KEY id (id)
             ) {$charsetCollate};
         ";
-        if (!defined('ABSPATH')) {
-            define('ABSPATH', dirname(__FILE__) . '/../../../../');
-        }
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
     }
